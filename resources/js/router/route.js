@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Admin from './admin';
+import SuperAdmin from './superadmin';
 import store from '../store/index';
 
 
@@ -10,8 +11,10 @@ const routes = new VueRouter({
     mode: 'history',
     linkExactActiveClass: 'active',
     routes: [
+        // super admin route
+        ...SuperAdmin,
+        // admin route
         ...Admin,
-          // Auth-route
           {
             path: "/",
             name: "Home",

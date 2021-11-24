@@ -8,6 +8,8 @@ require('./bootstrap');
 import router from './router/route';
 
 window.Vue = require('vue').default;
+import moment from 'moment';
+
 axios.defaults.baseURL = '/api/'
 axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
 /**
@@ -23,12 +25,30 @@ axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getIte
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('main-component', require('./App.vue').default);
+//Vue Filter to make first letter Capital
+Vue.filter("strToUpper", function(text) {
+	return text.charAt(0).toUpperCase() + text.slice(1);
+});
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.filter('currency', value=> {
+    return '$' + parseFloat(value).toFixed(2);
+});
+
+Vue.filter('trim', value=> {
+    if (!value) return ''
+    return value.substring(0, 40) + '...'
+});
+
+Vue.filter('trimpost', value=> {
+    if (!value) return ''
+    return value.substring(0, 30) + '...'
+});
+
+
+Vue.filter('dateformat', value=> {
+    if (!value) return ''
+    return moment(String(value)).format('LL')
+});
 
 // mixin
 Vue.mixin

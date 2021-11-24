@@ -10,12 +10,16 @@
 
                 <ul class="mt-2">
                     <li>
-                        <router-link :to="{name: 'admin-dashboard'}" class="">
+                        <router-link :to="{name: 'super-admin-dashboard'}" class="">
                             <i class="las la-cart-arrow-down"></i><span class="menuText">Dashboard</span></router-link>
                     </li>
                     <li>
                         <router-link :to="{name: 'Users'}" class="">
                             <i class="las la-cart-arrow-down"></i><span class="menuText">Users</span></router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name: 'Category'}" class="">
+                            <i class="las la-cart-arrow-down"></i><span class="menuText">Category</span></router-link>
                     </li>
 
                     <li>
@@ -44,7 +48,7 @@
                 <!--header area end-->
 
                 <div class="routing h-screen py-4 px-4 bg-gray-100">
-                    <div v-if="$router.currentRoute.name === 'admin-dashboard'">
+                    <div v-if="$router.currentRoute.name === 'super-admin-dashboard'">
                         <admin-dashboad></admin-dashboad>
                     </div>
 
@@ -57,7 +61,7 @@
 </template>
 
 <script>
-import AdminDashboad from '../ExampleComponent.vue'
+import AdminDashboad from './pages/index.vue'
     export default {
         components: {AdminDashboad},
         data() {
