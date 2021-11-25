@@ -13,10 +13,15 @@
                         <router-link :to="{name: 'admin-dashboard'}" class="">
                             <i class="las la-cart-arrow-down"></i><span class="menuText">Dashboard</span></router-link>
                     </li>
-                    
+
                    <li>
-                        <router-link :to="{name: 'Category'}" class="">
+                        <router-link :to="{name: 'Admin-Category'}" class="">
                             <i class="las la-cart-arrow-down"></i><span class="menuText">Category</span></router-link>
+                    </li>
+
+                   <li>
+                        <router-link :to="{name: 'Home'}" class="">
+                            <i class="las la-cart-arrow-down"></i><span class="menuText">Home</span></router-link>
                     </li>
 
                     <li>
@@ -68,14 +73,14 @@ import AdminDashboad from './pages/index.vue'
         },
     methods:{
       logout(){
-          axios.post('logout')
-                .then(res =>{
-                    this.$store.commit('SET_AUTHENTICATED', false);
-                    this.$store.commit('SET_USER', '');
-                    localStorage.removeItem("token");
-                    this.$router.push({name:'login'});
-             })
-      },
+          axios.post('logout').then(res =>{
+              console.log(res)
+              this.$store.commit('SET_AUTHENTICATED',false);
+              this.$router.push({name:'Home'});
+              this.$store.commit('SET_USER', null);
+              localStorage.removeItem('token')
+          })
+        },
 
       leftmenutext(){
           document.getElementById("sidebar").style.display = "block";

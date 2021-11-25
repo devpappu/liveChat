@@ -108,20 +108,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       form: {
-        user_amount: '',
-        user_type: '',
-        expiry_date: '',
-        minimum_cost: '',
-        usage_limit: '',
-        status: '',
-        category_id: '',
-        user_id: ''
+        email: '',
+        role: '',
+        name: ''
       },
       users: {},
+      errors: '',
       edit_user_id: '',
       edit_user_mode: false
     };
@@ -145,40 +153,48 @@ __webpack_require__.r(__webpack_exports__);
           title: 'user Added successfully.'
         });
 
-        _this2.loaduser();
+        _this2.loadUser();
 
         console.log(response);
       })["catch"](function (e) {
         _this2.errors = e.response.data.errors;
       });
     },
-    Edituser: function Edituser(id) {
-      this.edit_user_id = id;
+    Edituser: function Edituser(user) {
+      this.edit_user_id = user.id;
       this.edit_user_mode = true;
+      this.form.name = user.name;
+      this.form.email = user.email;
+      this.form.role = user.role;
     },
     Deleteuser: function Deleteuser(id) {
       var _this3 = this;
 
-      axios.post("/api/user/delete/".concat(id)).then(function (res) {
+      axios.post("user/delete/".concat(id)).then(function (res) {
         Toast.fire({
           icon: 'success',
-          title: 'user Updated successfully.'
+          title: 'User Updated successfully.'
         });
         console.log(res);
 
-        _this3.loaduser();
+        _this3.loadUser();
       });
     },
     Updateuser: function Updateuser() {
       var _this4 = this;
 
       var id = this.edit_user_id;
-      axios.post("/api/user/update/".concat(id), this.form).then(function () {
-        //  Toast.fire({
-        //         icon: 'success',
-        //         title: 'user Updated successfully.'
-        //    });
-        _this4.loaduser();
+      axios.post("user/update/".concat(id), this.form).then(function () {
+        Toast.fire({
+          icon: 'success',
+          title: 'User Updated successfully.'
+        });
+        _this4.edit_user_id = null;
+        _this4.edit_user_mode = false;
+        _this4.form.name = null;
+        _this4.form.email = null;
+
+        _this4.loadUser();
       });
     }
   },
@@ -322,7 +338,7 @@ var render = function () {
                                 on: {
                                   click: function ($event) {
                                     $event.preventDefault()
-                                    return _vm.Edituser(user.id)
+                                    return _vm.Edituser(user)
                                   },
                                 },
                               },
@@ -370,9 +386,77 @@ var render = function () {
                   },
                 },
                 [
+                  _c("div", { staticClass: "my-2" }, [
+                    _c("label", { staticClass: "block text-gray-800" }, [
+                      _vm._v("Name"),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.name,
+                          expression: "form.name",
+                        },
+                      ],
+                      staticClass:
+                        "w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600",
+                      attrs: {
+                        type: "email",
+                        id: "name",
+                        placeholder: "name",
+                        required: "",
+                      },
+                      domProps: { value: _vm.form.name },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "name", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-2" }, [
+                    _c("label", { staticClass: "block text-gray-800" }, [
+                      _vm._v("Email"),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email",
+                        },
+                      ],
+                      staticClass:
+                        "w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600",
+                      attrs: {
+                        type: "email",
+                        id: "email",
+                        placeholder: "email",
+                        required: "",
+                      },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { staticClass: "text-sm form-label" }, [
-                      _vm._v("user Type"),
+                      _vm._v("User Role"),
                     ]),
                     _vm._v(" "),
                     _c(
@@ -382,8 +466,8 @@ var render = function () {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.user_type,
-                            expression: "form.user_type",
+                            value: _vm.form.role,
+                            expression: "form.role",
                           },
                         ],
                         staticClass: "form-control text-sm",
@@ -400,7 +484,7 @@ var render = function () {
                               })
                             _vm.$set(
                               _vm.form,
-                              "user_type",
+                              "role",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
@@ -417,21 +501,27 @@ var render = function () {
                           },
                           [
                             _vm._v(
-                              "Select Type\n                                    "
+                              "Select Role\n                                    "
                             ),
                           ]
                         ),
                         _vm._v(" "),
                         _c(
                           "option",
-                          { attrs: { value: "fixed", selected: "" } },
-                          [_vm._v("Fixed")]
+                          { attrs: { value: "user", selected: "" } },
+                          [_vm._v("User")]
                         ),
                         _vm._v(" "),
                         _c(
                           "option",
-                          { attrs: { value: "percentage", selected: "" } },
-                          [_vm._v("Percentage")]
+                          { attrs: { value: "admin", selected: "" } },
+                          [_vm._v("Admin")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          { attrs: { value: "superadmin", selected: "" } },
+                          [_vm._v("Super Admin")]
                         ),
                       ]
                     ),

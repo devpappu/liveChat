@@ -27,7 +27,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -109,6 +108,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -124,15 +128,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('logout').then(function (res) {
+        console.log(res);
+
         _this.$store.commit('SET_AUTHENTICATED', false);
 
-        _this.$store.commit('SET_USER', '');
-
-        localStorage.removeItem("token");
-
         _this.$router.push({
-          name: 'login'
+          name: 'Home'
         });
+
+        _this.$store.commit('SET_USER', null);
+
+        localStorage.removeItem('token');
       });
     },
     leftmenutext: function leftmenutext() {
@@ -815,6 +821,17 @@ var render = function () {
                 _c("router-link", { attrs: { to: { name: "Category" } } }, [
                   _c("i", { staticClass: "las la-cart-arrow-down" }),
                   _c("span", { staticClass: "menuText" }, [_vm._v("Category")]),
+                ]),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("router-link", { attrs: { to: { name: "Home" } } }, [
+                  _c("i", { staticClass: "las la-cart-arrow-down" }),
+                  _c("span", { staticClass: "menuText" }, [_vm._v("Home")]),
                 ]),
               ],
               1

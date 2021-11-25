@@ -71,6 +71,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -86,15 +91,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('logout').then(function (res) {
+        console.log(res);
+
         _this.$store.commit('SET_AUTHENTICATED', false);
 
-        _this.$store.commit('SET_USER', '');
-
-        localStorage.removeItem("token");
-
         _this.$router.push({
-          name: 'login'
+          name: 'Home'
         });
+
+        _this.$store.commit('SET_USER', null);
+
+        localStorage.removeItem('token');
       });
     },
     leftmenutext: function leftmenutext() {
@@ -118,7 +125,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -754,9 +760,26 @@ var render = function () {
             _c(
               "li",
               [
-                _c("router-link", { attrs: { to: { name: "Category" } } }, [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "Admin-Category" } } },
+                  [
+                    _c("i", { staticClass: "las la-cart-arrow-down" }),
+                    _c("span", { staticClass: "menuText" }, [
+                      _vm._v("Category"),
+                    ]),
+                  ]
+                ),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("router-link", { attrs: { to: { name: "Home" } } }, [
                   _c("i", { staticClass: "las la-cart-arrow-down" }),
-                  _c("span", { staticClass: "menuText" }, [_vm._v("Category")]),
+                  _c("span", { staticClass: "menuText" }, [_vm._v("Home")]),
                 ]),
               ],
               1

@@ -144,6 +144,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -280,7 +288,49 @@ var render = function () {
           "div",
           { staticClass: "col-md-10 offset-md-1 col-lg-9 offset-lg-0" },
           [
-            _vm._m(2),
+            _c("div", { staticClass: "widget welcome-message" }, [
+              _c("h2", [_vm._v("Edit Profile")]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor\n                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud\n                        exercitation"
+                ),
+              ]),
+              _vm._v(" "),
+              this.AuthUser.role == "superadmin"
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link text-white add-button",
+                          attrs: { to: { name: "super-admin-dashboard" } },
+                        },
+                        [_vm._v("Go To Dashboard")]
+                      ),
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              this.AuthUser.role == "admin"
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link text-white add-button",
+                          attrs: { to: { name: "admin-dashboard" } },
+                        },
+                        [_vm._v("Go To Dashboard")]
+                      ),
+                    ],
+                    1
+                  )
+                : _vm._e(),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-6 col-md-6" }, [
@@ -302,6 +352,8 @@ var render = function () {
                       }),
                     ]),
                     _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
                     _vm._m(3),
                     _vm._v(" "),
                     _vm._m(4),
@@ -310,8 +362,6 @@ var render = function () {
                     _vm._v(" "),
                     _vm._m(6),
                     _vm._v(" "),
-                    _vm._m(7),
-                    _vm._v(" "),
                     _c("button", { staticClass: "btn btn-transparent" }, [
                       _vm._v("Save My Changes"),
                     ]),
@@ -319,9 +369,9 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _vm._m(8),
+              _vm._m(7),
               _vm._v(" "),
-              _vm._m(9),
+              _vm._m(8),
             ]),
           ]
         ),
@@ -369,20 +419,6 @@ var staticRenderFns = [
             _vm._v("Recommended"),
           ]),
         ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "widget welcome-message" }, [
-      _c("h2", [_vm._v("Edit profile")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor\n                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud\n                        exercitation"
-        ),
       ]),
     ])
   },

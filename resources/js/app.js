@@ -11,7 +11,13 @@ window.Vue = require('vue').default;
 import moment from 'moment';
 
 axios.defaults.baseURL = '/api/'
-axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+let token = ''
+
+if (localStorage.getItem('token')){
+    token = localStorage.getItem('token');
+}
+
+axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -65,8 +71,8 @@ Vue.mixin
             Loading(){
                 return  this.$store.getters.get_Loading;
             },
-            websiteaddress(){
-                return  'http://sanctum.test/';
+            Token(){
+                return  this.$store.getters.Get_TOKEN;
             },
             url(){
                 return  'http://sanctum.test/';

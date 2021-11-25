@@ -4,7 +4,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Dashboard Component</div>
-
                     <div class="card-body">
                         <h3>!! Hello {{AuthUser.name}} </h3> <br>
                         <h3>Your Current Role Is {{AuthUser.role}}</h3>

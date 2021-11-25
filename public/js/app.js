@@ -2140,7 +2140,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 
 axios.defaults.baseURL = '/api/';
-axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+var token = '';
+
+if (localStorage.getItem('token')) {
+  token = localStorage.getItem('token');
+}
+
+axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -2184,8 +2190,8 @@ Vue.mixin({
     Loading: function Loading() {
       return this.$store.getters.get_Loading;
     },
-    websiteaddress: function websiteaddress() {
-      return 'http://sanctum.test/';
+    Token: function Token() {
+      return this.$store.getters.Get_TOKEN;
     },
     url: function url() {
       return 'http://sanctum.test/';
@@ -2280,7 +2286,7 @@ __webpack_require__.r(__webpack_exports__);
     return __webpack_require__.e(/*! import() */ "resources_js_components_Backend_adminDashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Backend/adminDashboard.vue */ "./resources/js/components/Backend/adminDashboard.vue"));
   },
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store_index__WEBPACK_IMPORTED_MODULE_1__["default"].state.authenticated == true) {
+    if (_store_index__WEBPACK_IMPORTED_MODULE_1__["default"].state.user.role == 'admin') {
       next();
     } else {
       return next({
@@ -2289,10 +2295,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   children: [{
-    path: '/admin/user',
-    name: "Users",
+    path: '/admin/category',
+    name: "Admin-Category",
     component: function component() {
-      return __webpack_require__.e(/*! import() */ "resources_js_components_Backend_pages_users_index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Backend/pages/users/index.vue */ "./resources/js/components/Backend/pages/users/index.vue"));
+      return __webpack_require__.e(/*! import() */ "resources_js_components_Backend_pages_category_index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/Backend/pages/category/index.vue */ "./resources/js/components/Backend/pages/category/index.vue"));
     }
   }]
 }]);
@@ -2443,6 +2449,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1_
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     user: [],
+    permissions: [],
+    token: '',
     authenticated: false,
     loading: false,
     Toast: '',
@@ -2461,6 +2469,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     Get_TOAST: function Get_TOAST(state) {
       return state.Toast;
     },
+    Get_TOKEN: function Get_TOKEN(state) {
+      return state.token;
+    },
     Get_TOAST_MASSAGE: function Get_TOAST_MASSAGE(state) {
       return state.Toastmassage;
     }
@@ -2472,6 +2483,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     SET_USER: function SET_USER(state, data) {
       state.user = data;
     },
+    SET_TOKEN: function SET_TOKEN(state, data) {
+      state.token = data;
+    },
     SET_AUTHENTICATED: function SET_AUTHENTICATED(state, data) {
       state.authenticated = data;
     },
@@ -2480,15 +2494,21 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     SET_TOAST_MASSAGE: function SET_TOAST_MASSAGE(state, data) {
       state.Toastmassage = data;
+    },
+    SET_PERMISSIONS: function SET_PERMISSIONS(state, data) {
+      state.permissions = data;
     }
   },
   actions: {
     authUser: function authUser(_ref) {
       var commit = _ref.commit,
           dispatch = _ref.dispatch;
-      return axios.get('user').then(function (res) {
+      return axios.get('profile').then(function (res) {
         commit('SET_AUTHENTICATED', true);
-        commit('SET_USER', res.data);
+        commit('SET_USER', res.data.user);
+        commit('SET_PERMISSIONS', res.data.permissions);
+        var token = localStorage.getItem('token');
+        commit('SET_TOKEN', token);
       })["catch"](function () {
         commit('SET_AUTHENTICATED', false);
       });
@@ -76168,7 +76188,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Frontend_index_vue":1,"resources_js_components_Auth_login_vue":1,"resources_js_components_Auth_rigister_vue":1,"resources_js_components_Auth_profile_profile_vue":1,"resources_js_components_Backend_adminDashboard_vue":1,"resources_js_components_Backend_pages_users_index_vue":1,"resources_js_components_Backend_superadmindashboard_vue":1,"resources_js_components_Backend_pages_category_index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Frontend_index_vue":1,"resources_js_components_Auth_login_vue":1,"resources_js_components_Auth_rigister_vue":1,"resources_js_components_Auth_profile_profile_vue":1,"resources_js_components_Backend_adminDashboard_vue":1,"resources_js_components_Backend_pages_category_index_vue":1,"resources_js_components_Backend_superadmindashboard_vue":1,"resources_js_components_Backend_pages_users_index_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

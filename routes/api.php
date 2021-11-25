@@ -30,13 +30,15 @@ Route::middleware('auth:sanctum')->group(function () {
     //------------------------------- User  Logout --------------------------\\
     //------------------------------------------------------------------\\
     Route::post('logout',[AuthController::class,'logout']);
+    Route::get('profile',[AuthController::class,'profile']);
+
 
 
     //------------------------------- User  Crud --------------------------\\
     //------------------------------------------------------------------\\
     Route::get('users',[UserController::class,'index']);
-    Route::post('user/update/{id}',[CategoryController::class,'update']);
-    Route::post('user/delete/{id}',[CategoryController::class,'destroystore']);
+    Route::post('user/update/{id}',[UserController::class,'update']);
+    Route::post('user/delete/{id}',[UserController::class,'destroy']);
 
 
     //------------------------------- Category  Crud --------------------------\\

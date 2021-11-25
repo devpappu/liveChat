@@ -35,7 +35,7 @@
 
                                 <!-- <td> {{ user.create_at }} </td> -->
                                 <td style="width: 170px">
-                                    <a @click.prevent="Edituser(user.id)" href="#"
+                                    <a @click.prevent="Edituser(user)" href="#"
                                         class="btn btn-primary btn-sm">Edit</a>
                                     <a @click.prevent="Deleteuser(user.id)" href="#"
                                         class="btn btn-danger btn-sm">Delete</a>
@@ -66,17 +66,29 @@
                         <div class="card-body">
                             <form @submit.prevent="createuser">
 
+                               <div class="my-2">
+                                    <label class="block text-gray-800">Name</label>
+                                    <input type="email" v-model="form.name" id="name" placeholder="name"
+                                        class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" required />
+                                    <!-- <small v-if="errors.name" class="form-text text-danger">{{ errors.name[0] }}</small> -->
+                                </div>
+                               <div class="my-2">
+                                    <label class="block text-gray-800">Email</label>
+                                    <input type="email" v-model="form.email" id="email" placeholder="email"
+                                        class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" required />
+                                    <!-- <small v-if="errors.email" class="form-text text-danger">{{ errors.email[0] }}</small> -->
+                                </div>
 
                                 <div class="form-group">
-                                    <label class="text-sm form-label">user Type</label>
 
+                                    <label class="text-sm form-label">User Role</label>
 
-                                    <select v-model="form.user_type" id="user_type" class="form-control text-sm">
-                                        <option value="" style="display: none" selected>Select Type
+                                    <select v-model="form.role" id="user_type" class="form-control text-sm">
+                                        <option value="" style="display: none" selected>Select Role
                                         </option>
-
-                                        <option value="fixed" selected>Fixed</option>
-                                        <option value="percentage" selected>Percentage</option>
+                                        <option value="user" selected>User</option>
+                                        <option value="admin" selected>Admin</option>
+                                        <option value="superadmin" selected>Super Admin</option>
                                     </select>
                                 </div>
 
@@ -99,16 +111,12 @@
    export default {
      data: () => ({
         form: {
-          user_amount: '',
-          user_type: '',
-          expiry_date: '',
-          minimum_cost: '',
-          usage_limit: '',
-          status: '',
-          category_id:'',
-          user_id: ''
+          email: '',
+          role: '',
+          name: '',
         },
       users:{},
+      errors:'',
       edit_user_id:'',
       edit_user_mode:false,
       }),
@@ -132,7 +140,7 @@
                         icon: 'success',
                         title: 'user Added successfully.'
                     });
-                    this.loaduser();
+                    this.loadUser();
                     console.log(response)
                 })
                  .catch(e => {
@@ -141,20 +149,23 @@
                      });
            },
 
-            Edituser(id){
-                this.edit_user_id = id;
-                this.edit_user_mode = true
+            Edituser(user){
+                this.edit_user_id = user.id;
+                this.edit_user_mode = true;
+                this.form.name = user.name
+                this.form.email = user.email
+                this.form.role = user.role
             },
 
             Deleteuser(id){
-                axios.post(`/api/user/delete/${id}`)
+                axios.post(`user/delete/${id}`)
                 .then(res =>{
                    Toast.fire({
                             icon: 'success',
-                            title: 'user Updated successfully.'
+                            title: 'User Updated successfully.'
                      });
                     console.log(res)
-                   this.loaduser();
+                   this.loadUser();
                 });
             },
 
@@ -162,15 +173,19 @@
 
                  const id = this.edit_user_id;
 
-                axios.post(`/api/user/update/${id}`, this.form)
+                axios.post(`user/update/${id}`, this.form)
                   .then(() =>{
 
-                    //  Toast.fire({
-                    //         icon: 'success',
-                    //         title: 'user Updated successfully.'
-                    //    });
-
-                    this.loaduser();
+                     Toast.fire({
+                            icon: 'success',
+                            title: 'User Updated successfully.'
+                       });
+                       
+                    this.edit_user_id = null;
+                    this.edit_user_mode = false;
+                    this.form.name = null
+                    this.form.email = null
+                    this.loadUser();
                 });
             },
 

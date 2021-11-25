@@ -51,9 +51,16 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
-    public function check_token(Request $request){
+    public function profile(Request $request){
 
-        return Auth()->user();
+         $user =  Auth()->user();
+        $permissions = 'null';
+
+        return response([
+            'user' => $user,
+            'permissions' => $permissions
+        ], 201);
+
     }
 
     public function logout(Request $request)

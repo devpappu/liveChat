@@ -6,6 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
       user:[],
+      permissions:[],
+      token:'',
       authenticated:false,
       loading:false,
       Toast:'',
@@ -25,6 +27,9 @@ const store = new Vuex.Store({
       Get_TOAST: state => {
           return state.Toast;
       },
+      Get_TOKEN: state => {
+          return state.token;
+      },
       Get_TOAST_MASSAGE: state => {
           return state.Toastmassage;
       },
@@ -36,6 +41,9 @@ const store = new Vuex.Store({
         SET_USER(state, data){
             state.user = data;
         },
+        SET_TOKEN(state, data){
+            state.token = data;
+        },
         SET_AUTHENTICATED(state,data){
             state.authenticated = data;
         },
@@ -45,13 +53,19 @@ const store = new Vuex.Store({
         SET_TOAST_MASSAGE(state,data){
             state.Toastmassage = data;
         },
+        SET_PERMISSIONS(state,data){
+            state.permissions = data;
+        },
 
     },
     actions:{
       authUser ({ commit, dispatch }) {
-        return axios.get('user').then(res => {
+        return axios.get('profile').then(res => {
             commit('SET_AUTHENTICATED', true)
-            commit('SET_USER', res.data)
+            commit('SET_USER', res.data.user)
+            commit('SET_PERMISSIONS', res.data.permissions)
+            let token = localStorage.getItem('token');
+            commit('SET_TOKEN', token);
 
         }).catch(() => {
             commit('SET_AUTHENTICATED', false)

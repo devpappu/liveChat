@@ -61,18 +61,30 @@ __webpack_require__.r(__webpack_exports__);
           var token = response.data.token;
           var user_role = response.data.user.role;
 
-          if (user_role !== "admin") {
-            _this.errors = 'Make Sure Your Email & Password!';
-          }
-
           if (user_role == "admin") {
             _this.$store.commit('SET_AUTHENTICATED', true);
 
             _this.$router.push({
-              name: 'admin-dashboard'
+              name: 'Profile'
             });
 
             _this.$store.commit('SET_USER', response.data.user);
+
+            _this.$store.commit('SET_TOKEN', token);
+
+            localStorage.setItem('token', token);
+          }
+
+          if (user_role == "superadmin") {
+            _this.$store.commit('SET_AUTHENTICATED', true);
+
+            _this.$router.push({
+              name: 'Profile'
+            });
+
+            _this.$store.commit('SET_USER', response.data.user);
+
+            _this.$store.commit('SET_TOKEN', token);
 
             localStorage.setItem('token', token);
           }
@@ -85,6 +97,8 @@ __webpack_require__.r(__webpack_exports__);
             });
 
             _this.$store.commit('SET_USER', response.data.user);
+
+            _this.$store.commit('SET_TOKEN', token);
 
             localStorage.setItem('token', token);
           }

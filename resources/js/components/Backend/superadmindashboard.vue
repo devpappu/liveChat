@@ -22,6 +22,11 @@
                             <i class="las la-cart-arrow-down"></i><span class="menuText">Category</span></router-link>
                     </li>
 
+                     <li>
+                        <router-link :to="{name: 'Home'}" class="">
+                            <i class="las la-cart-arrow-down"></i><span class="menuText">Home</span></router-link>
+                    </li>
+
                     <li>
                         <a href="#" @click="logout()"><i class="las la-sign-out-alt"></i><span
                                 class="menuText">Logout</span></a>
@@ -71,14 +76,14 @@ import AdminDashboad from './pages/index.vue'
         },
     methods:{
       logout(){
-          axios.post('logout')
-                .then(res =>{
-                    this.$store.commit('SET_AUTHENTICATED', false);
-                    this.$store.commit('SET_USER', '');
-                    localStorage.removeItem("token");
-                    this.$router.push({name:'login'});
-             })
-      },
+          axios.post('logout').then(res =>{
+              console.log(res)
+              this.$store.commit('SET_AUTHENTICATED',false);
+              this.$router.push({name:'Home'});
+              this.$store.commit('SET_USER', null);
+              localStorage.removeItem('token')
+          })
+        },
 
       leftmenutext(){
           document.getElementById("sidebar").style.display = "block";

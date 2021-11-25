@@ -28,10 +28,18 @@
                     <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
                         <!-- Edit Profile Welcome Text -->
                         <div class="widget welcome-message">
-                            <h2>Edit profile</h2>
+                            <h2>Edit Profile</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                 exercitation</p>
+
+                                <div v-if=" this.AuthUser.role == 'superadmin' ">
+                                    <router-link :to="{name: 'super-admin-dashboard'}" class="nav-link text-white add-button">Go To Dashboard</router-link>
+                                </div>
+
+                                <div v-if="this.AuthUser.role == 'admin'">
+                                    <router-link :to="{name: 'admin-dashboard'}" class="nav-link text-white add-button">Go To Dashboard</router-link>
+                                </div>
                         </div>
                         <!-- Edit Personal Info -->
                         <div class="row">

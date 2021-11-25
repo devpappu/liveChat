@@ -8,17 +8,18 @@ export default [
         component: () => import("../components/Backend/adminDashboard.vue"),
             beforeEnter: (to, from, next) => {
 
-                if(store.state.authenticated == true){
+                if(store.state.user.role == 'admin'){
                     next();
                 }else{
                     return next({ name: 'Profile'});
                 }
             },
             children: [
+
                 {
-                path: '/admin/user',
-                name: "Users",
-                component: () => import("../components/Backend/pages/users/index.vue")
+                    path: '/admin/category',
+                    name: "Admin-Category",
+                    component: () => import("../components/Backend/pages/category/index.vue")
                 },
             ]
         },

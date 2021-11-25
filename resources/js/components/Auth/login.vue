@@ -47,14 +47,20 @@ export default {
                  const token = response.data.token;
                  const user_role = response.data.user.role;
 
-                    if(user_role !== "admin"){
-                        this.errors = 'Make Sure Your Email & Password!'
-                    }
 
                     if(user_role == "admin"){
                         this.$store.commit('SET_AUTHENTICATED',true);
-                        this.$router.push({name:'admin-dashboard'});
+                        this.$router.push({name:'Profile'});
                         this.$store.commit('SET_USER', response.data.user);
+                        this.$store.commit('SET_TOKEN', token);
+                        localStorage.setItem('token', token);
+                    }
+
+                    if(user_role == "superadmin"){
+                        this.$store.commit('SET_AUTHENTICATED',true);
+                        this.$router.push({name:'Profile'});
+                        this.$store.commit('SET_USER', response.data.user);
+                         this.$store.commit('SET_TOKEN', token);
                         localStorage.setItem('token', token);
                     }
 
@@ -62,8 +68,11 @@ export default {
                         this.$store.commit('SET_AUTHENTICATED',true);
                         this.$router.push({name:'Profile'});
                         this.$store.commit('SET_USER', response.data.user);
+                        this.$store.commit('SET_TOKEN', token);
                         localStorage.setItem('token', token);
                     }
+
+
 
                 })
                 .catch(error  =>{
