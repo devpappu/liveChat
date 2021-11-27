@@ -24,12 +24,13 @@ export default {
     },
 
     mounted(){
-        console.log('home App')
+
     }
 }
 </script>
 
 <style>
+
 @import '../../../../public/Frontend/css/style.css';
 @import '../../../../public/Frontend/plugins/font-awesome/css/font-awesome.min.css';
 </style>

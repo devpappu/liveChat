@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\FCMController;
+use App\Http\Controllers\backend\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +25,12 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 });
 
 
-// User Route-Controller
 Route::middleware('auth:sanctum')->group(function () {
 
+
+    Route::get('/chats',[ChatController::class,'index']);
+    Route::get('/messages', [ChatController::class,'fetchAllMessages']);
+    Route::post('/messages', [ChatController::class,'sendMessage']);
 
     //------------------------------- User  Logout --------------------------\\
     //------------------------------------------------------------------\\
@@ -33,20 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile',[AuthController::class,'profile']);
 
 
-
-    //------------------------------- User  Crud --------------------------\\
+    //------------------------------- Live Chating --------------------------\\
     //------------------------------------------------------------------\\
-    Route::get('users',[UserController::class,'index']);
-    Route::post('user/update/{id}',[UserController::class,'update']);
-    Route::post('user/delete/{id}',[UserController::class,'destroy']);
+    Route::post('save-token',[FCMController::class,'index']);
 
-
-    //------------------------------- Category  Crud --------------------------\\
-    //------------------------------------------------------------------\\
-    Route::get('category',[CategoryController::class,'index']);
-    Route::post('category/create',[CategoryController::class,'store']);
-    Route::post('category/update/{id}',[CategoryController::class,'update']);
-    Route::post('category/delete/{id}',[CategoryController::class,'destroy']);
 
 
 });
@@ -59,3 +54,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+
+
+ //------------------------------- User  Crud --------------------------\\
+    //------------------------------------------------------------------\\
+    Route::get('users',[UserController::class,'index']);
+    Route::post('user/update/{id}',[UserController::class,'update']);
+    Route::post('user/delete/{id}',[UserController::class,'destroy']);
+
+
+    //------------------------------- Category  Crud --------------------------\\
+    //------------------------------------------------------------------\\
+    Route::get('category',[CategoryController::class,'index']);
+    Route::post('category/create',[CategoryController::class,'store']);
+    Route::post('category/update/{id}',[CategoryController::class,'update']);
+    Route::post('category/delete/{id}',[CategoryController::class,'destroy']);

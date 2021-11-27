@@ -52,7 +52,7 @@
                     </div>
             </div>
 
-        <div class="form lg:w-4/12">
+        <div class="CAform lg:w-4/12">
             <div class="card-header">
                 Category
             </div>

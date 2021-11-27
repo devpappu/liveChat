@@ -21,6 +21,11 @@ const routes = new VueRouter({
             component: () => import("../components/Frontend/index.vue"),
                 children: [
                     {
+                    path: '/chating',
+                    name: "Chat",
+                    component: () => import("../components/Chating/chat.vue")
+                    },
+                    {
                     path: '/login',
                     name: "Login",
                     component: () => import("../components/Auth/login.vue")
@@ -34,6 +39,20 @@ const routes = new VueRouter({
                     path: '/profile',
                     name: "Profile",
                     component: () => import("../components/Auth/profile/profile.vue"),
+
+                    beforeEnter: (to, from, next) => {
+
+                        if(store.state.authenticated == true){
+                            next();
+                        }else{
+                            return next({ name: 'Login'});
+                        }
+                    },
+                    },
+                    {
+                    path: '/chat',
+                    name: "Chat",
+                    component: () => import("../components/Chating/chat.vue"),
 
                     beforeEnter: (to, from, next) => {
 

@@ -23,8 +23,14 @@ class User extends Authenticatable
         'password',
         'role',
         'image',
+        'fcm_token',
     ];
 
+    public function messages(){
+
+        return $this->hasMany(Message::class);
+
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

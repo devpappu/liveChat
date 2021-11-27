@@ -18,6 +18,8 @@ if (localStorage.getItem('token')){
 }
 
 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -28,6 +30,9 @@ axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('main-component', require('./App.vue').default);
@@ -101,7 +106,7 @@ if(auth){
     const app = new Vue({
         el: '#app',
         router,
-        store
+        store,
     });
 
 }
